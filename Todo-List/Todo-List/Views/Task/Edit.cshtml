@@ -1,0 +1,19 @@
+﻿@model Todo_List.Models.TaskItem
+<link href="~/css/Myedit.css" rel="stylesheet" />
+<form asp-action="Edit" asp-controller="Task" method="post">
+    <input type="hidden" asp-for="TaskId" />
+
+    <div>
+        <label asp-for="TaskName"></label>
+        <input asp-for="TaskName" />
+        <span asp-validation-for="TaskName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="TaskDescription"></label>
+        <textarea asp-for="TaskDescription"></textarea>
+        <span asp-validation-for="TaskDescription" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Save</button>
+</form>

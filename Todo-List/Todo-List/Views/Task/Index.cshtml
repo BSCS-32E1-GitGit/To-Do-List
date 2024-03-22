@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Todo_List.Models.TaskItem>
+
+
+
+<link href="~/css/Myindex.css" rel="stylesheet" />
+
+<div class="search">
+    <input type="text" id="searchInput" placeholder="Search tasks..." onkeyup="searchTasks()">
+</div>
+<div class="panel">
+
+    <div class="panel-body">
+        <div class="task-list">
+            @foreach (var task in Model)
+            {
+                <div class="task-container">
+                    <h3 class="task-name">@task.TaskName</h3>
+                    <p class="task-description">@Html.Raw(task.TaskDescription.Replace(Environment.NewLine, "<br>"))</p> <!-- Render as plain text with line breaks -->
+                    <div class="task-actions">
+
+                        <!-- Form for editing task -->
+                        <form asp-action="Edit" method="get">
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit" class="task-button task-edit">Edit</button>
+                        </form>
+
+                        <!-- Form for marking task as completed -->
+                        <form asp-action="MarkAsDone" method="post">
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit" class="task-button task-done">Done</button>
+                        </form>
+
+                        <!-- Form for deleting task -->
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit" class="task-button task-delete">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<a asp-action="Create" asp-controller="Task" class="add-task-link">Add New Task</a>
+
+<script>
+    function searchTasks() {
+        var input, filter, taskList, taskContainers, taskName, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        taskList = document.querySelector('.task-list');
+        taskContainers = taskList.querySelectorAll('.task-container');
+
+        for (i = 0; i < taskContainers.length; i++) {
+            taskName = taskContainers[i].querySelector('.task-name');
+            txtValue = taskName.textContent || taskName.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                taskContainers[i].style.display = "";
+            } else {
+                taskContainers[i].style.display = "none";
+            }
+        }
+    }
+</script>

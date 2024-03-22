@@ -1,0 +1,19 @@
+﻿@model Todo_List.Models.TaskItem
+<link href="~/css/Create.css" rel="stylesheet" />
+<form asp-action="Create" asp-controller="Task" method="post">
+    <div>
+        <label for="TaskName">Task Name:</label>
+        <input type="text" id="TaskName" name="TaskName" value="@Model.TaskName" required />
+        <!-- Add "required" attribute for client-side validation -->
+        <span asp-validation-for="TaskName" class="text-danger"></span>
+        <!-- Display validation error message -->
+    </div>
+    <div>
+        <label for="TaskDescription">Task Description:</label>
+        <textarea id="TaskDescription" name="TaskDescription" required>@Model.TaskDescription</textarea>
+        <!-- Add "required" attribute for client-side validation -->
+        <span asp-validation-for="TaskDescription" class="text-danger"></span>
+        <!-- Display validation error message -->
+    </div>
+    <button type="submit">Create Task</button>
+</form>
